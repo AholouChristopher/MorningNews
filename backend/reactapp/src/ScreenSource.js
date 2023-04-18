@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 import { List, Avatar } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Nav from './Nav'
 import { connect } from 'react-redux';
 
@@ -36,7 +36,6 @@ function ScreenSource(props) {
    const getWishlist = async () => {
       const data = await fetch(`/wishlist/${props.myToken}`);
       let body = await data.json()
-      console.log(body.articles)
 
       if( body.result && body.articles ){
         props.importArticles(body.articles)
@@ -45,6 +44,10 @@ function ScreenSource(props) {
     }
     getWishlist();
   },[])
+  console.log(props.myToken )
+   if (props.myToken == '') {
+     return <Redirect to='/' />
+    }
 
   return (
     <div>
@@ -74,7 +77,6 @@ function ScreenSource(props) {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
     myToken: state.token,
     mySelectedLang: state.selectLang

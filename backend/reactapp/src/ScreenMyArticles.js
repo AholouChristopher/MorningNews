@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { Card } from 'antd';
 import { DeleteOutlined, ReadOutlined } from '@ant-design/icons';
+import { Redirect } from 'react-router-dom';
+
 
 import Nav from './Nav'
 import { connect } from 'react-redux';
@@ -29,6 +31,10 @@ function ScreenMyArticles(props) {
       console.log("article delete")
     }
   } 
+
+  if (props.myToken == '') {
+    return <Redirect to='/' />
+   }
 
   return (
     <div>

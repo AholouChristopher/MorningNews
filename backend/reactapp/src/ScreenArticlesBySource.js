@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './App.css';
@@ -64,12 +64,16 @@ function ScreenArticlesBySource(props) {
       body:
         `&token=${props.myToken}&title=${article.title}&description=${article.description}&urlToImage=${article.urlToImage}&url=${article.url}`
     });
-
     const res = await data.json();
     if (res.result === true) {
       console.log("article save")
-    }
+    } 
   }
+
+  if (props.myToken == '') {
+    return <Redirect to='/' />
+   }
+
   return (
     <div>
       <Nav />
